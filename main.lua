@@ -1,9 +1,12 @@
 local day = arg[1]
 local shouldUseExample = arg[2] == "example"
 
+local config = require("common/config")
+config.isDebugPrintingEnabled = arg[3] == "debug"
+
 local dayDir = string.format("./days/%s", day)
 local inputPath = dayDir .. "/input.txt"
-local solutionPath = dayDir .. "/solution.lua"
+local solutionPath = dayDir .. "/solution"
 
 if shouldUseExample then
     inputPath = dayDir .. "/example.txt"
@@ -20,7 +23,7 @@ else
     os.exit(1)
 end
 
-local solutionFunc, err = loadfile(solutionPath)()
+local solutionFunc = require(solutionPath)
 
 if solutionFunc then
     local result = solutionFunc(inputContent)
