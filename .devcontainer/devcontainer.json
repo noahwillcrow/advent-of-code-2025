@@ -1,0 +1,16 @@
+// .devcontainer/devcontainer.json
+{
+    "name": "Minimal Lua Environment",
+  "image": "nickblah/lua:5.4-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {}
+  },
+    // Optional: Install VS Code extensions that enhance the environment
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "sumneko.lua" // Highly recommended Lua Language Server
+            ]
+        }
+    }
+}
