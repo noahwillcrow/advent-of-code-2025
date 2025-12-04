@@ -15,10 +15,10 @@ function parseInput(inputStr)
     return result
 end
 
-return function(inputStr)
-    local input = parseInput(inputStr)
+function part1(input)
     local sum = 50
     local zeroesCounter = 0
+
     for i = 1, #input do
         local prevSum = sum
         local addend = input[i]
@@ -26,7 +26,41 @@ return function(inputStr)
         if sum == 0 then
             zeroesCounter = zeroesCounter + 1
         end
-        print(prevSum, addend, sum, zeroesCounter)
+    end
+
+    return zeroesCounter
+end
+
+function part2(input)
+    local sum = 50
+    local zeroesCounter = 0
+    for i = 1, #input do
+        local prevSum = sum
+
+        local addend = input[i]
+
+        local tempSum = sum + addend
+
+        local hundos = math.floor(math.abs(tempSum) / 100)
+
+        if tempSum < 0 and prevSum > 0 then
+            hundos = hundos + 1
+        elseif tempSum == 0 then
+            hundos = hundos + 1
+        end
+        
+        sum = tempSum % 100
+
+        zeroesCounter = zeroesCounter + hundos
+
+        if (math.abs(addend) > 100) then
+            print(prevSum, addend, tempSum, sum, hundos, zeroesCounter)
+        end
     end
     return zeroesCounter
+end
+
+return function(inputStr)
+    local input = parseInput(inputStr)
+    return part1(input) .. " " .. part2(input)
 end
