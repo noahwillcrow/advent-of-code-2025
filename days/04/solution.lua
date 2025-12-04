@@ -82,6 +82,7 @@ function part2(input)
     local emptiedChar = "x"
     local totalRemoved = 0
 
+    -- decided to _not_ do this in-place because if I start that habit I may end up with part1 affecting part2's input, or having to parse the input twice... It's fine, I have enough RAM.
     local currentInput = input
     
     local wellSurroundedTargetCharPositions = {}
