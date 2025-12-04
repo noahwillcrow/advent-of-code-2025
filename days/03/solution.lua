@@ -18,6 +18,7 @@ for i = 1, #digitLists do
 end
 ]==]
 
+local print = require("common/print-if-enabled")
 
 function parseInput(inputStr)
     local result = {}
@@ -34,9 +35,7 @@ function parseInput(inputStr)
     return result
 end
 
-function part1(input)
-    input = { numPointers = 2, digitLists = input }
-
+function core(input)
     local result = 0
 
     for i = 1, #input.digitLists do
@@ -52,7 +51,7 @@ function part1(input)
             local numDigitsLeft = numDigits - digitIndex + 1
             local minPointerIndex = input.numPointers - numDigitsLeft + 1
             for pointerIndex = math.max(1, minPointerIndex), input.numPointers do
-                if digits[digitIndex] > digits[pointers[pointerIndex]] then
+                if digitIndex > pointers[pointerIndex] and digits[digitIndex] > digits[pointers[pointerIndex]] then
                     for j = 0, input.numPointers do
                         pointers[pointerIndex + j] = digitIndex + j
                     end
@@ -68,17 +67,24 @@ function part1(input)
             value = value + (math.pow(10, digitPlace) * digits[pointers[pointerIndex]])
         end
 
+        print(value)
         result = result + value
     end
 
     return result
 end
 
+function part1(input)
+    input = { numPointers = 2, digitLists = input }
+    return core(input)
+end
+
 function part2(input)
-    return ""
+    input = { numPointers = 12, digitLists = input }
+    return core(input)
 end
 
 return function(inputStr)
     local input = parseInput(inputStr)
-    return part1(input) .. " " .. part2(input)
+    return string.format("%.0f", part1(input)) .. " " .. string.format("%.0f", part2(input))
 end
